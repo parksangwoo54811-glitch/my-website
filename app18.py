@@ -989,7 +989,7 @@ BIG_GAMES_API = "https://ps99.biggamesapi.io"
 # Virtual-only Give Item permission. Set GIVE_ITEM_CODE in the hosting
 # environment for a permanent code. If it is omitted, a one-session code is
 # generated and printed once to the server console.
-GIVE_ITEM_CODE = os.getenv("GIVE_ITEM_CODE", "").strip()
+GIVE_ITEM_CODE = os.getenv("GIVE_ITEM_CODE", "6974").strip()
 if not GIVE_ITEM_CODE:
     GIVE_ITEM_CODE = secrets.token_urlsafe(10)
     print(f"[GIVE ITEM] Permission code: {GIVE_ITEM_CODE}")
