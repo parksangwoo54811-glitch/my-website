@@ -2699,38 +2699,6 @@ def api_tip():
     })
 
 
-# ============================================================
-@app.route("/api/tip", methods=["POST"])
-@login_required
-def api_tip():
-    sender = current_user()
-    data = request.get_json(silent=True) or {}
-    try:
-        recipient_id = int(data.get("user_id"))
-        amount = round(float(data.get("amount", 0)), 2)
-    except (TypeError, ValueError):
-        return jsonify({"ok": False, "error": "Invalid recipient or amount."}), 400
-    if recipient_id == sender["id"]:
-        return jsonify({"ok": False, "error": "You cannot tip yourself."}), 400
-    if amount < 0.01 or amount > 1000000:
-        return jsonify({"ok": False, "error": "Tip must be between 1 and 1M Gems."}), 400
-    conn = db()
-    recipient = conn.execute("SELECT id, display_name FROM users WHERE id=?", (recipient_id,)).fetchone()
-    balance = conn.execute("SELECT balance FROM users WHERE id=?", (sender["id"],)).fetchone()
-    if not recipient:
-        conn.close()
-        return jsonify({"ok": False, "error": "User not found."}), 404
-    if not balance or float(balance["balance"]) < amount:
-        conn.close()
-        return jsonify({"ok": False, "error": "Insufficient balance."}), 400
-    conn.execute("UPDATE users SET balance=balance-? WHERE id=?", (amount, sender["id"]))
-    conn.execute("UPDATE users SET balance=balance+? WHERE id=?", (amount, recipient_id))
-    sender_name = conn.execute("SELECT display_name FROM users WHERE id=?", (sender["id"],)).fetchone()["display_name"]
-    public_message = f"💎 {sender_name} sent {recipient['display_name']} {format_gems(amount)} Gems!"
-    conn.execute("INSERT INTO chat(user_id,message,created_at) VALUES(?,?,?)", (sender["id"], public_message, int(time.time())))
-    conn.commit()
-    conn.close()
-    return jsonify({"ok": True, "message": public_message, "balance": float(balance["balance"])-amount})
 
 
 # ============================================================
