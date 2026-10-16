@@ -67,7 +67,7 @@ app.config.update(
 
 DB_FILE = "colordice.db"
 START_BALANCE = 10_000_000_000.00
-MAX_BET = 500_000_000.00
+MAX_BET = 500_000_000_000_000_000
 
 DISCORD_API = "https://discord.com/api/v10"
 
