@@ -67,7 +67,7 @@ app.config.update(
 
 DB_FILE = "colordice.db"
 START_BALANCE = 10_000_000_000.00
-MAX_BET = 500_000_000_000_000_000_000
+MAX_BET = 9999999999999999_000_000_000_000_000_000
 
 DISCORD_API = "https://discord.com/api/v10"
 
@@ -1483,7 +1483,7 @@ def create_match():
         return jsonify({"ok": False, "error": "Invalid Gems wager."}), 400
 
     if bet > MAX_BET:
-        return jsonify({"ok": False, "error": "Maximum Gems wager is 500M."}), 400
+        return jsonify({"ok": False, "error": "Maximum Gems wager is 500b."}), 400
 
     conn = db()
 
