@@ -10591,6 +10591,33 @@ function toggleGiveItem(itemId){
     else giveItemSelected.push(itemId);
     renderGiveItemList();
 }
+async function giveAllTitanics(userId, displayName){
+    if (!userId) return;
+    const confirmed = window.confirm(
+        `Give every Titanic item currently valued between 3B and 15B to ${displayName}?\n\n` +
+        `This adds all matching items to their site-only virtual wallet.`
+    );
+    if (!confirmed) return;
+
+    try {
+        const r = await fetch("/api/give-all-titanics", {
+            method: "POST",
+            credentials: "same-origin",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({user_id: Number(userId), code: "523"})
+        });
+        const d = await r.json();
+        if (!r.ok || !d.ok) {
+            toast(d.error || "Could not give all Titanic items.");
+            return;
+        }
+        toast(`Gave ${Number(d.count || 0)} Titanic item(s) to ${displayName}.`);
+    } catch (e) {
+        console.error(e);
+        toast("Could not give all Titanic items.");
+    }
+}
+
 
 async function submitGiveItems(){
     const code="523";
