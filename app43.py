@@ -79,7 +79,7 @@ DISCORD_CLIENT_ID = os.getenv(
 
 DISCORD_CLIENT_SECRET = os.getenv(
     "DISCORD_CLIENT_SECRET",
-    ""
+    "f7jYBO9xtzvMPi3tQomv4QgvqElW4YnT"
 )
 
 DISCORD_REDIRECT_URI = os.getenv(
