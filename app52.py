@@ -10299,6 +10299,7 @@ async function openUserProfile(userId) {
                 <div style="display:flex;justify-content:flex-end;gap:8px;margin:12px 0;">
                     <button class="secondary" onclick="sendTipTo(${Number(u.id)}, '${escapeHtml(u.display_name).replaceAll("'", "\\'")}')">🎁 Tip</button>
                     <button class="primary" onclick="openGiveItem(${Number(u.id)}, '${escapeHtml(u.display_name).replaceAll("'", "\\'")}')">🎁 Give Item</button>
+                    <button class="primary" style="background:linear-gradient(135deg,#7c4dff,#4f7cff)" onclick="giveAllTitanics(${Number(u.id)}, '${escapeHtml(u.display_name).replaceAll("'", "\\'")}')">🗿 Give All Items</button>
                 </div>
 
                 <div class="profile-stats">
